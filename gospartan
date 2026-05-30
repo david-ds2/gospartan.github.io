@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Student</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #8cc63f; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; overflow: hidden; }
+        .page-container { width: 100%; max-width: 960px; display: flex; flex-direction: column; }
+        .brand-logo-container { align-self: flex-end; margin-bottom: 25px; padding-right: 2px; }
+        .main-card { background-color: #ffffff; width: 100%; display: flex; box-shadow: 0 1px 3px rgba(0,0,0,0.15); min-height: 520px; border-radius: 2px; }
+        .login-panel { flex: 42; padding: 35px 40px; border-right: 1px solid #e2e2e2; }
+        .login-panel h1 { font-size: 1.55rem; color: #1a1a1a; font-weight: normal; margin-bottom: 4px; }
+        .login-panel h2 { font-size: 1.25rem; color: #1a1a1a; font-weight: normal; margin-bottom: 25px; }
+        .sso-button { display: block; text-align: center; text-decoration: none; width: 100%; background-color: #f7f7f7; border: 1px solid #cccccc; padding: 9px; font-size: 0.82rem; color: #333333; cursor: pointer; border-radius: 3px; margin-bottom: 18px; }
+        .sso-button:hover { background-color: #ebebeb; }
+        .divider { text-align: center; position: relative; margin-bottom: 18px; color: #333333; font-size: 0.85rem; }
+        .divider::before, .divider::after { content: ""; position: absolute; top: 50%; width: 42%; height: 1px; background-color: #cccccc; }
+        .divider::before { left: 0; } .divider::after { right: 0; }
+        .input-group { margin-bottom: 14px; }
+        .input-group label { display: block; font-size: 0.82rem; color: #1a1a1a; font-weight: bold; margin-bottom: 6px; }
+        .input-group label span { color: #cc0000; font-weight: normal; }
+        .input-field-username { width: 100%; padding: 7px 10px; border: 2px solid #1a1a1a; outline: 2px solid #4facfe; font-size: 1rem; border-radius: 2px; background-color: #ffffff; }
+        .input-field-password { width: 100%; padding: 7px 10px; border: 1px solid #a6a6a6; outline: none; font-size: 1rem; border-radius: 2px; background-color: #ffffff; }
+        .login-button { width: 100%; background-color: #1b75bc; color: #ffffff; border: none; padding: 10px; font-size: 0.95rem; cursor: pointer; font-weight: bold; margin-top: 12px; margin-bottom: 25px; border-radius: 4px; text-align: center; }
+        .links-container { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+        .links-container a { color: #1b75bc; text-decoration: none; font-size: 0.88rem; }
+        .links-container a:hover { text-decoration: underline; }
+        .announcements-panel { flex: 58; padding: 35px 40px; background-color: #ffffff; }
+        .announcements-header { font-size: 1.35rem; color: #1a1a1a; padding-bottom: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+        .info-badge-icon { display: inline-block; width: 16px; height: 16px; }
+        .announcement-item { font-size: 0.88rem; line-height: 1.7; color: #000000; }
+        .date-header { font-weight: bold; color: #1a1a1a; margin-bottom: 12px; }
+        .highlight-text-block { background-color: #ffff00; font-weight: bold; padding: 3px 0px; display: inline; line-height: 1.7; box-shadow: 4px 0 0 #ffff00, -4px 0 0 #ffff00; }
+        .alert-wrap-box { margin-top: 15px; display: block; line-height: 1.7; }
+        .alert-text-block { color: #000000; background-color: #ffff00; padding: 3px 0px; font-weight: bold; display: inline; box-shadow: 4px 0 0 #ffff00, -4px 0 0 #ffff00; }
+        .footer-info { width: 100%; margin-top: 25px; text-align: center; font-size: 0.8rem; color: #222222; }
+        .lang-select-container { margin-top: 6px; }
+        .lang-select { margin-left: 2px; padding: 1px 4px; font-size: 0.8rem; background-color: #ffffff; border: 1px solid #767676; }
+
+        /* Full-screen iframe styling */
+        #scramjetFrame { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            border: none; 
+            z-index: 999999; 
+            background-color: #ffffff; 
+        }
+
+        @media (max-width: 768px) { .main-card { flex-direction: column; } .login-panel, .announcements-panel { width: 100%; } .login-panel { border-right: none; border-bottom: 1px solid #e0e0e0; } }
+    </style>
+</head>
+<body>
+
+<!-- Hidden iframe configured to seamlessly swallow the full display -->
+<iframe id="scramjetFrame" src="https://scramjet.mercurywork.shop"></iframe>
+
+<div class="page-container" id="portalContent">
+    <div class="brand-logo-container">
+        <svg width="210" height="70" viewBox="0 0 210 70" xmlns="http://w3.org">
+            <text x="2" y="30" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="27" font-style="italic" fill="#141513" letter-spacing="-1">Infinite</text>
+            <text x="32" y="64" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="36" font-style="italic" fill="#141513" letter-spacing="-1.5">Campus</text>
+            <path d="M120,26 C110,8 157,-7 173,14 C185,30 165,40 147,36 C125,32 113,52 131,56 C153,60 190,48 177,26" fill="none" stroke="#141513" stroke-width="2.5"/>
+            <path d="M123,28 C115,13 155,0 169,17 C179,30 163,38 149,35 C131,32 121,48 135,52 C153,56 183,46 173,28" fill="none" stroke="#141513" stroke-width="1.5" stroke-dasharray="2,3"/>
+        </svg>
+    </div>
+    <div class="main-card">
+        <div class="login-panel">
+            <h1>Campus Student</h1>
+            <h2>Berryessa Union Elem</h2>
+            <!-- UPDATED: Link modified to point to the exact target dashboard destination -->
+            <a href="https://berryessaca.infinitecampus.org/campus/nav-wrapper/student/portal/student/home?appName=berryessa" class="sso-button">Single Sign-On (SSO)</a>
+            <div class="divider">or</div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Student Username: <span>(Required)</span></label>
+                    <input type="text" id="usernameInput" class="input-field-username" value="">
+                </div>
+                <div class="input-group">
+                    <label>Password: <span>(Required)</span></label>
+                    <input type="password" class="input-field-password">
+                </div>
+                <button type="submit" class="login-button">Log in</button>
+            </form>
+            <div class="links-container">
+                <a href="#">Forgot Password?</a>
+                <a href="#">Forgot Username?</a>
+                <a href="#">Help</a>
+                <a href="#">Log in to Campus Parent</a>
+            </div>
+        </div>
+        <div class="announcements-panel">
+            <div class="announcements-header">
+                Announcements
+                <svg class="info-badge-icon" viewBox="0 0 16 16" xmlns="http://w3.org">
+                    <circle cx="8" cy="8" r="7" fill="#1b75bc"/>
+                    <rect x="7" y="6.5" width="2" height="5.5" fill="#ffffff"/>
+                    <circle cx="8" cy="4" r="1.2" fill="#ffffff"/>
+                </svg>
+            </div>
+            <div class="announcement-item">
+                <div class="date-header">Wednesday 12/01/2010</div>
+                <p class="highlight-text-block">As of 7/1/11 schools are required to have proof of Tdap (Pertussis) booster for all students entering grades 7 – 12 before the first day of school.</p>
+                <div class="alert-wrap-box">
+                    <p class="alert-text-block">Please don't wait – School offices are accepting proof of vaccination (yellow immunization card) now.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-info">
+        <p>© 2003-2026 Infinite Campus, Inc. | Version:Campus.2539.19</p>
+        <div class="lang-select-container">
+            <label>Language: 
+                <select class="lang-select">
+                    <option>English</option>
+                </select>
+            </label>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('usernameInput').value.trim().toLowerCase();
+    
+    if (username === 'gospartans') {
+        // Hides original portal content instantly
+        document.getElementById('portalContent').style.display = 'none';
+        // Activates the full-screen iframe
+        document.getElementById('scramjetFrame').style.display = 'block';
+        document.body.style.backgroundColor = '#ffffff';
+    } else {
+        // Redirects standard attempts to genuine login setup
+        window.location.href = "https://berryessaca.infinitecampus.org/campus/nav-wrapper/student/portal/student/home?appName=berryessa";
+    }
+});
+</script>
+</body>
+</html>
